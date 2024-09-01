@@ -1,6 +1,5 @@
 package com.acbtnb.branches_service.models.entities;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 
