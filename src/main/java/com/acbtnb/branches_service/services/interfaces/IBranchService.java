@@ -5,6 +5,7 @@ import com.acbtnb.branches_service.responses.ResponseObject;
 
 public interface IBranchService {
     ResponseObject insertBranch(BranchDTO branchDTO);
+    ResponseObject updateBranch(Integer id, BranchDTO branchDTO);
     ResponseObject getBranch(Integer id);
     ResponseObject listBranches();
     ResponseObject deleteBranch(Integer id);

@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url:   jdbc:mysql://localhost:3306/bank_api
+    url:   jdbc:mysql://localhost:3306/TTTK
     username: root
-    password: Nguyen@1475369
+    password: admin
 
   jpa:
     hibernate:

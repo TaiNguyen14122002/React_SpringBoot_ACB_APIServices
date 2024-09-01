@@ -7,10 +7,16 @@ import com.acbtnb.branches_service.repositories.BranchRepository;
 import com.acbtnb.branches_service.responses.ResponseObject;
 import com.acbtnb.branches_service.services.interfaces.IBranchService;
 import com.acbtnb.branches_service.utils.CusResponseMessage;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -19,10 +25,28 @@ public class BranchService implements IBranchService {
     @Autowired
     private BranchRepository branchRepository;
     private final BranchDtoConverter branchDtoConverter = new BranchDtoConverter();
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public ResponseObject insertBranch(BranchDTO branchDTO) {
-        return null;
+        Branch branch = branchDtoConverter.branchDTOToBranch(branchDTO);
+        branchRepository.saveAndFlush(branch);
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .data(branchDTO).build();
+    }
+
+    @Override
+    public ResponseObject updateBranch(Integer id, BranchDTO branchDTO) {
+        Branch branch = branchDtoConverter.branchDTOToBranch(branchDTO);
+        branch.setId(id);
+        branchRepository.saveAndFlush(branch);
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .data(branchDTO).build();
     }
 
     @Override
@@ -50,6 +74,17 @@ public class BranchService implements IBranchService {
 
     @Override
     public ResponseObject deleteBranch(Integer id) {
-        return null;
+        // Mapper
+        Branch branch = new Branch();
+        branch.setId(id);
+        branch.setDeleted(true);
+        branch.setDeleted_at(LocalDate.now());
+
+        // Save
+        branchRepository.saveAndFlush(branch);
+
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .build();
     }
 }
