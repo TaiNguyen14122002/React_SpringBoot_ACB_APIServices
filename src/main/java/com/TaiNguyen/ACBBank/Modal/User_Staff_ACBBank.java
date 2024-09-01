@@ -1,10 +1,7 @@
 package com.TaiNguyen.ACBBank.Modal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -15,13 +12,17 @@ public class User_Staff_ACBBank {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false)
     private String employeeCode;
 
+    @Column(nullable = false)
     private String fullName;
+    @Column(nullable = false)
     private String email;
 
     //An Mat Khau
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
 
 
