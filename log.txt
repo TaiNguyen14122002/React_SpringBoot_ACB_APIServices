@@ -1,0 +1,14 @@
+Filter Logs: SEQ = 1; TIMESTAMP = 2024-09-01 22:55:05; METHOD = POST; REQUESTURI = /auth/login; REQUEST = {
+    "employeeCode": "NV06",
+    "password": "TaiNguyen"
+} ; RESPONSE CODE = 200; RESPONSE BODY = {"message":"ÄÄng nháº­p thÃ nh cÃ´ng","fullName":"NguyenVanTai","employeeCode":"NV06","email":"TaiNguyenlq.0123@gmail.com","token":"eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjUyMDYxMDUsImV4cCI6MTcyNTI5MjUwNSwiZW1haWwiOiJOVjA2In0.7plMMIIFK8h42STyR0CSFtRJdHvh96FaTtlqZ4ubjyU"}; TIME TAKEN = 237 ms
+Filter Logs: SEQ = 2; TIMESTAMP = 2024-09-01 22:55:29; METHOD = POST; REQUESTURI = /auth/login; REQUEST = {
+    "employeeCode": "NV05",
+    "password": "TaiNguyen"
+} ; RESPONSE CODE = 200; RESPONSE BODY = {"message":"ÄÄng nháº­p thÃ nh cÃ´ng","fullName":null,"employeeCode":"NV05","email":"TaiNguyenlq.0123@gmail.com","token":"eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjUyMDYxMjksImV4cCI6MTcyNTI5MjUyOSwiZW1haWwiOiJOVjA1In0.OFd-8xNBIGUOfDPEELJwrjFENiIKnAZSjvgkZBRm9YQ"}; TIME TAKEN = 147 ms
+Filter Logs: SEQ = 3; TIMESTAMP = 2024-09-01 22:55:37; METHOD = POST; REQUESTURI = /auth/signup; REQUEST = {
+    "employeeCode": "NV09",
+    "fullName": "NguyenVanTai",
+    "email": "TaiNguyenlq.0123@gmail.com",
+    "password": "TaiNguyen"
+} ; RESPONSE CODE = 201; RESPONSE BODY = {"message":"ÄÄng kÃ½ tÃ i khoáº£n thÃ nh cÃ´ng","fullName":"NguyenVanTai","employeeCode":"NV09","email":"TaiNguyenlq.0123@gmail.com","token":"eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjUyMDYxMzcsImV4cCI6MTcyNTI5MjUzNywiZW1haWwiOiJOVjA5In0.Vm_9VGciuzyEI1QAYuYSe0nzyb8_k-56mdiqxFCJ3W4"}; TIME TAKEN = 199 ms
