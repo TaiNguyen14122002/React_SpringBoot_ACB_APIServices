@@ -1,10 +1,12 @@
 package com.acbtnb.branches_service.models.entities;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 @Data
 @Entity
@@ -28,13 +30,13 @@ public class Branch {
 
     @NonNull
     @Column(name = "created_at")
-    @Temporal(TemporalType.DATE)
-    private LocalDate created_at = LocalDate.now();
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime created_at = LocalDateTime.now();
 
     @NonNull
     private Boolean deleted = false;
 
     @Column(name = "deleted_at")
-    @Temporal(TemporalType.DATE)
-    private LocalDate deleted_at;
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime deleted_at;
 }

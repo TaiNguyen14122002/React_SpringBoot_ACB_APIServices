@@ -15,7 +15,7 @@ public class BranchDtoConverter {
         return modelMapper.map(branch, BranchDTO.class);
     }
 
-    public Branch movieDTOToMovie(BranchDTO branchDTO)
+    public Branch branchDTOToBranch(BranchDTO branchDTO)
     {
         return modelMapper.map(branchDTO, Branch.class);
     }

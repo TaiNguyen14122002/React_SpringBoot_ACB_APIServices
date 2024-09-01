@@ -1,13 +1,13 @@
 package com.acbtnb.branches_service.controllers;
 
 import com.acbtnb.branches_service.controllers.interfaces.IBranchesController;
+import com.acbtnb.branches_service.models.dtos.BranchDTO;
+import com.acbtnb.branches_service.models.dtos.BulkBranchesDTO;
 import com.acbtnb.branches_service.responses.ResponseObject;
 import com.acbtnb.branches_service.services.interfaces.IBranchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/branches")
@@ -17,14 +17,21 @@ public class BranchController implements IBranchesController {
     private IBranchService iBranchService;
 
     @Override
-    public ResponseObject insertBranch() {
-        return null;
+    @PostMapping("/insert-branch")
+    public ResponseObject insertBranch(@RequestBody BranchDTO branchDTO) {
+        return iBranchService.insertBranch(branchDTO);
+    }
+
+    @Override
+    @PostMapping("/insert-bulk-branches")
+    public ResponseObject insertBranch(@RequestBody BulkBranchesDTO bulkBranchesDTO) {
+        return iBranchService.insertBulkBranches(bulkBranchesDTO);
     }
 
     @Override
     @GetMapping("/list-branches")
     public ResponseObject listBranches() {
-        return null;
+        return iBranchService.listBranches(1, 1);
     }
 
     @Override
@@ -34,7 +41,8 @@ public class BranchController implements IBranchesController {
     }
 
     @Override
-    public ResponseObject deleteBranch() {
-        return null;
+    @DeleteMapping("/delete-branch")
+    public ResponseObject deleteBranch(@RequestParam("id") Integer id) {
+        return iBranchService.deleteBranch(id);
     }
 }

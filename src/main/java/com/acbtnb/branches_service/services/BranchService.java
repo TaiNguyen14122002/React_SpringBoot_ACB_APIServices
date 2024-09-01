@@ -2,15 +2,20 @@ package com.acbtnb.branches_service.services;
 
 import com.acbtnb.branches_service.models.converters.BranchDtoConverter;
 import com.acbtnb.branches_service.models.dtos.BranchDTO;
+import com.acbtnb.branches_service.models.dtos.BulkBranchesDTO;
 import com.acbtnb.branches_service.models.entities.Branch;
 import com.acbtnb.branches_service.repositories.BranchRepository;
 import com.acbtnb.branches_service.responses.ResponseObject;
 import com.acbtnb.branches_service.services.interfaces.IBranchService;
 import com.acbtnb.branches_service.utils.CusResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +27,35 @@ public class BranchService implements IBranchService {
 
     @Override
     public ResponseObject insertBranch(BranchDTO branchDTO) {
-        return null;
+        //Convert branchDTO to branch
+        Branch branch = branchDtoConverter.branchDTOToBranch(branchDTO);
+
+        branch = branchRepository.save(branch);
+
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .message(CusResponseMessage.insertBranchSuccessMess)
+                .data(branch).build();
+    }
+
+    @Override
+    public ResponseObject insertBulkBranches(BulkBranchesDTO bulkBranchesDTO) {
+
+        List<Branch> branchList = new ArrayList<>();
+
+        bulkBranchesDTO.getBranches().forEach(each -> {
+            //Convert branchDTO to branch
+            Branch branch = branchDtoConverter.branchDTOToBranch(each);
+
+            branchList.add(branch);
+        });
+
+        List<Branch> branchListResult = branchRepository.saveAll(branchList);
+
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .message(CusResponseMessage.insertBranchSuccessMess)
+                .data(branchListResult).build();
     }
 
     @Override
@@ -44,12 +77,54 @@ public class BranchService implements IBranchService {
     }
 
     @Override
-    public ResponseObject listBranches() {
-        return null;
+    public ResponseObject listBranches(Integer page, Integer size) {
+        List<Branch> branchesList = getBranchesList(page, size);
+
+        if (branchesList == null)
+        {
+            return ResponseObject.builder()
+                    .status(HttpStatus.OK.name())
+                    .message(CusResponseMessage.emptyBranchesMess)
+                    .data(null).build();
+        }
+
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .message(CusResponseMessage.existedBranchesMess)
+                .data(branchesList).build();
     }
 
     @Override
     public ResponseObject deleteBranch(Integer id) {
-        return null;
+        Optional<Branch> movie = branchRepository.findBranchById(id);
+
+        if (movie.isEmpty())
+        {
+            return ResponseObject.builder()
+                    .status(HttpStatus.OK.name())
+                    .message(CusResponseMessage.notFoundBranchMess)
+                    .data(null).build();
+        }
+
+        branchRepository.delete(movie.get());
+
+        return ResponseObject.builder()
+                .status(HttpStatus.OK.name())
+                .message(CusResponseMessage.deleteBranchSuccessMess)
+                .data(null).build();
+    }
+
+    // Other methods
+    private List<Branch> getBranchesList(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        List<Branch> branchesList = branchRepository.findAll(pageRequest).getContent();
+
+        if (branchesList.isEmpty())
+        {
+            return null;
+        }
+
+        return  branchesList;
     }
 }
