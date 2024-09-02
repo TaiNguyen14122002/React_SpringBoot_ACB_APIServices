@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Table(name = "Branch")
 public class Branch {
     @Id
-    @NonNull
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
