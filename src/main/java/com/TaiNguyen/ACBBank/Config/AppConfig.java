@@ -40,7 +40,7 @@ public class AppConfig {
                         "http://localhost:5173"
                 ));
                 config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                config.setAllowedMethods(Arrays.asList("Authorization", "Content-Type"));
+                config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
                 config.setAllowedMethods(Arrays.asList("Authorization"));
                 config.setAllowCredentials(true);
                 config.setMaxAge(3600L);

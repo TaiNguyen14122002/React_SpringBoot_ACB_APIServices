@@ -7,6 +7,8 @@ import com.TaiNguyen.ACBBank.Request.Login_Staff_ACBBank;
 import com.TaiNguyen.ACBBank.Response.AuthResponse;
 import com.TaiNguyen.ACBBank.Service.UserStaffDetailsImpl;
 import io.jsonwebtoken.Jwt;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag( name = "AuthController", description = "To perform operations on students")
 public class AuthController {
 
     @Autowired
@@ -35,6 +38,10 @@ public class AuthController {
     @Autowired
     private UserStaffDetailsImpl userStaffDetails;
 
+    @Operation(
+            summary = "POST SIGNUP operation on auth",
+            description = "It is staff signup"
+    )
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User_Staff_ACBBank user_Staff_ACBBank) throws Exception {
         User_Staff_ACBBank isUserExistingUser = userStaffRepository.findByemployeeCode(user_Staff_ACBBank.getEmployeeCode());
@@ -78,6 +85,10 @@ public class AuthController {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
+    @Operation(
+            summary = "POST LOGIN operation on auth",
+            description = "It is staff login"
+    )
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> signing(@RequestBody Login_Staff_ACBBank loginRequest){
         String Code = loginRequest.getEmployeeCode();
