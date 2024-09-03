@@ -5,6 +5,8 @@ import com.TaiNguyen.ACBBank.Modal.User_Staff_ACBBank;
 import com.TaiNguyen.ACBBank.Repository.UserStaffRepository;
 import com.TaiNguyen.ACBBank.Request.Login_Staff_ACBBank;
 import com.TaiNguyen.ACBBank.Response.AuthResponse;
+import com.TaiNguyen.ACBBank.Service.UserService;
+import com.TaiNguyen.ACBBank.Service.UserServiceImpl;
 import com.TaiNguyen.ACBBank.Service.UserStaffDetailsImpl;
 import io.jsonwebtoken.Jwt;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,10 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,6 +36,11 @@ public class AuthController {
 
     @Autowired
     private UserStaffDetailsImpl userStaffDetails;
+
+    @Autowired
+    private UserService userService;
+
+
 
     @Operation(
             summary = "POST SIGNUP operation on auth",
@@ -109,6 +113,26 @@ public class AuthController {
         res.setToken(jwt);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) throws Exception {
+        try{
+            String response = userService.forgotPassword(email);
+            return ResponseEntity.ok(response);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+//        return new ResponseEntity<>(userService.forgotPassword(email), HttpStatus.OK);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestParam String newPassword, @RequestParam String otp) throws Exception {
+        if(userService.resetPassword(email, newPassword, otp)){
+            return new ResponseEntity<>("Password reset successfully", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Password to reset failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

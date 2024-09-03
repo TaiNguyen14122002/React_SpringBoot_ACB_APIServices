@@ -6,6 +6,10 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "User_Staff_ACBBank", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "employeeCode"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User_Staff_ACBBank {
 
     @Id
@@ -17,13 +21,15 @@ public class User_Staff_ACBBank {
 
     @Column(nullable = false)
     private String fullName;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     //An Mat Khau
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
+
+
 
 
 }

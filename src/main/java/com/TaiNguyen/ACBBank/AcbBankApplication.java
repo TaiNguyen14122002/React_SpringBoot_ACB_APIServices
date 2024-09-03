@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+
 @OpenAPIDefinition(
 		info = @Info(
 			title = "AuthController OPEN API",
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 		)
 )
+//@EnableEurekaServer
 public class AcbBankApplication {
 
 	public static void main(String[] args) {
