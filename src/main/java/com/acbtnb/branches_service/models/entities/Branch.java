@@ -16,7 +16,6 @@ import java.util.Date;
 @Table(name = "Branch")
 public class Branch {
     @Id
-    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -32,9 +31,6 @@ public class Branch {
     @Column(name = "created_at")
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private LocalDateTime created_at = LocalDateTime.now();
-
-    @NonNull
-    private Boolean deleted = false;
 
     @Column(name = "deleted_at")
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")

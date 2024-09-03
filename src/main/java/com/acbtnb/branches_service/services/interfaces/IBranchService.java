@@ -10,6 +10,6 @@ public interface IBranchService {
     ResponseObject insertBranch(BranchDTO branchDTO);
     ResponseObject insertBulkBranches(BulkBranchesDTO bulkBranchesDTO);
     ResponseObject getBranch(Integer id);
-    ResponseObject listBranches(Integer page, Integer size);
+    ResponseObject listBranches();
     ResponseObject deleteBranch(Integer id);
 }

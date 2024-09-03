@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +63,7 @@ public class BranchService implements IBranchService {
     public ResponseObject getBranch(Integer id) {
         Optional<Branch> branch = branchRepository.findBranchById(id);
 
-        if (branch.isEmpty())
+        if (branch.isEmpty() || branch.get().getDeleted_at() != null)
         {
             return ResponseObject.builder()
                     .status(HttpStatus.OK.name())
@@ -77,10 +78,15 @@ public class BranchService implements IBranchService {
     }
 
     @Override
-    public ResponseObject listBranches(Integer page, Integer size) {
-        List<Branch> branchesList = getBranchesList(page, size);
+    public ResponseObject listBranches() {
+//        List<Branch> branchesList = getBranchesList(page, size);
+        List<Branch> branchesList = branchRepository.findAll();
 
-        if (branchesList == null)
+        List<Branch> resBranchesList = branchesList.stream()
+                .filter(e -> e.getDeleted_at() == null)
+                .toList();
+
+        if (resBranchesList.isEmpty())
         {
             return ResponseObject.builder()
                     .status(HttpStatus.OK.name())
@@ -91,14 +97,14 @@ public class BranchService implements IBranchService {
         return ResponseObject.builder()
                 .status(HttpStatus.OK.name())
                 .message(CusResponseMessage.existedBranchesMess)
-                .data(branchesList).build();
+                .data(resBranchesList).build();
     }
 
     @Override
     public ResponseObject deleteBranch(Integer id) {
-        Optional<Branch> movie = branchRepository.findBranchById(id);
+        Optional<Branch> branch = branchRepository.findBranchById(id);
 
-        if (movie.isEmpty())
+        if (branch.isEmpty())
         {
             return ResponseObject.builder()
                     .status(HttpStatus.OK.name())
@@ -106,12 +112,14 @@ public class BranchService implements IBranchService {
                     .data(null).build();
         }
 
-        branchRepository.delete(movie.get());
+        branch.get().setDeleted_at(LocalDateTime.now());
+
+        branchRepository.save(branch.get());
 
         return ResponseObject.builder()
                 .status(HttpStatus.OK.name())
                 .message(CusResponseMessage.deleteBranchSuccessMess)
-                .data(null).build();
+                .data(branch).build();
     }
 
     // Other methods

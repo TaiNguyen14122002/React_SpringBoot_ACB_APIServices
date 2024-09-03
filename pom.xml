@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.acbtnb</groupId>
-	<artifactId>branches-service</artifactId>
+	<artifactId>branches_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>branches-service</name>
-	<description>Branches service</description>
+	<description>Branches service for bank api services</description>
 	<url/>
 	<licenses>
 		<license/>

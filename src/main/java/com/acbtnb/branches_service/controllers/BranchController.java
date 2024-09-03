@@ -18,20 +18,20 @@ public class BranchController implements IBranchesController {
 
     @Override
     @PostMapping("/insert-branch")
-    public ResponseObject insertBranch(@RequestBody BranchDTO branchDTO) {
+    public ResponseObject insertBulkBranch(@RequestBody BranchDTO branchDTO) {
         return iBranchService.insertBranch(branchDTO);
     }
 
     @Override
     @PostMapping("/insert-bulk-branches")
-    public ResponseObject insertBranch(@RequestBody BulkBranchesDTO bulkBranchesDTO) {
+    public ResponseObject insertBulkBranch(@RequestBody BulkBranchesDTO bulkBranchesDTO) {
         return iBranchService.insertBulkBranches(bulkBranchesDTO);
     }
 
     @Override
     @GetMapping("/list-branches")
     public ResponseObject listBranches() {
-        return iBranchService.listBranches(1, 1);
+        return iBranchService.listBranches();
     }
 
     @Override
