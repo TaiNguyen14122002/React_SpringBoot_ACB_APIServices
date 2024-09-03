@@ -18,7 +18,7 @@ public class Account {
     @Id
     @NonNull
     @Column(length = 10)
-    private String id;
+    private Integer id;
 
     @NonNull
     private Integer customer_id;
