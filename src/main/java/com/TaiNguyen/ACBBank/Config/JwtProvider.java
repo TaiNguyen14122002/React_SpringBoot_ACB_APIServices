@@ -5,10 +5,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Service
 public class JwtProvider {
 
     private static final SecretKey KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -23,18 +25,22 @@ public class JwtProvider {
     }
 
     public static String getEmailFromToken(String jwt) {
-        jwt = jwt.substring(7);
+        if (jwt == null || jwt.length() <= 7 || !jwt.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid token format");
+        }
+
+        String token = jwt.substring(7); // Lấy phần sau "Bearer "
 
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(KEY)
                 .build()
-                .parseClaimsJws(jwt)
+                .parseClaimsJws(token)
                 .getBody();
 
         return String.valueOf(claims.get("email"));
     }
 
-    public static SecretKey getKey(){
+    public static SecretKey getKey() {
         return KEY;
     }
 }

@@ -3,6 +3,7 @@ package com.TaiNguyen.ACBBank.Controller;
 import com.TaiNguyen.ACBBank.Config.JwtProvider;
 import com.TaiNguyen.ACBBank.Modal.User_Staff_ACBBank;
 import com.TaiNguyen.ACBBank.Repository.UserStaffRepository;
+import com.TaiNguyen.ACBBank.Request.ChangePasswordRequest;
 import com.TaiNguyen.ACBBank.Request.Login_Staff_ACBBank;
 import com.TaiNguyen.ACBBank.Response.AuthResponse;
 import com.TaiNguyen.ACBBank.Service.UserService;
@@ -11,6 +12,7 @@ import com.TaiNguyen.ACBBank.Service.UserStaffDetailsImpl;
 import io.jsonwebtoken.Jwt;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,5 +136,36 @@ public class AuthController {
             return new ResponseEntity<>("Password to reset failed", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = (String) authentication.getPrincipal(); // Email được lưu trong Principal
+
+            User_Staff_ACBBank user = userStaffRepository.findByemployeeCode(email);
+            if (user == null) {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+
+            // Kiểm tra mật khẩu cũ
+            if (!passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
+                return new ResponseEntity<>("Old password is incorrect", HttpStatus.BAD_REQUEST);
+            }
+
+            // Cập nhật mật khẩu mới
+            user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+            userStaffRepository.save(user);
+
+            return new ResponseEntity<>("Password changed successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // Hoặc logger.error("Error changing password", e);
+            return new ResponseEntity<>("Password change failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 
 }
