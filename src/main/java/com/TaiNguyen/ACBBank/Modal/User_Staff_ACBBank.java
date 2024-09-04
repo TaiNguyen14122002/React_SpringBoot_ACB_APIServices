@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "User_Staff_ACBBank", uniqueConstraints = {
@@ -29,6 +31,8 @@ public class User_Staff_ACBBank {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String role;  // Thêm trường này để quản lý vai trò người dùng (ADMIN, VIEWER)
 
 
 

@@ -7,4 +7,5 @@ public interface UserService {
     String forgotPassword(String email) throws Exception;
     boolean resetPassword(String email, String newPassword, String otp) throws Exception;
     boolean changePassword(String oldPassword, String newPassword, String token ) throws Exception;
+//    void addEmployee(User_Staff_ACBBank newEmployee, String token) throws Exception;
 }
