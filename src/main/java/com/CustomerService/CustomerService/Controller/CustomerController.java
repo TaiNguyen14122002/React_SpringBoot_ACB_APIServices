@@ -18,42 +18,42 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/create")
+    @PostMapping("/create-customer")
     APIResponse<Customers> createCustomer(@RequestBody @Valid CustomerCreateRequest request){
         APIResponse<Customers> apiResponse = new APIResponse<>();
         apiResponse.setData(customerService.create(request));
         return apiResponse;
     }
 
-    @GetMapping()
+    @GetMapping("/get-all-customers")
     APIResponse<List<Customers>> getCustomers(){
         APIResponse<List<Customers>> apiResponse = new APIResponse<>();
         apiResponse.setData(customerService.getCustomers());
         return apiResponse;
     }
 
-    @GetMapping("/{customerID}")
+    @GetMapping("/get-customer/{customerID}")
     APIResponse<Customers> getCustomer(@PathVariable String customerID){
         APIResponse<Customers> apiResponse = new APIResponse<>();
         apiResponse.setData(customerService.getCustomer(customerID));
         return apiResponse;
     }
 
-    @PutMapping("/{customerID}")
+    @PutMapping("/update-customer/{customerID}")
     APIResponse<Customers> updateCustomer(@PathVariable String customerID, @RequestBody @Valid CustomerUpdateRequest request){
         APIResponse<Customers> apiResponse = new APIResponse<>();
         apiResponse.setData(customerService.updateCustomer(customerID, request));
         return apiResponse;
     }
 
-    @PatchMapping("/{customerID}")
+    @PatchMapping("/delete-customer/{customerID}")
     APIResponse<Customers> deleteCustomer(@PathVariable String customerID){
         APIResponse<Customers> apiResponse = new APIResponse<>();
         apiResponse.setData(customerService.deleteCustomer(customerID));
         return apiResponse;
     }
 
-    @PostMapping("/{customerID}/upload-images")
+    @PostMapping("/upload-image/{customerID}")
     APIResponse<Customers> uploadImages(
             @RequestParam("image_front") MultipartFile image_front,
             @RequestParam("image_back") MultipartFile image_back,
@@ -64,7 +64,7 @@ public class CustomerController {
         return apiResponse;
     }
 
-    @PostMapping("/create-list")
+    @PostMapping("/create-list-customers")
     public APIResponse createListCustomers(@RequestBody List<CustomerCreateRequest> list) {
         return customerService.createListCustomers(list);
     }
