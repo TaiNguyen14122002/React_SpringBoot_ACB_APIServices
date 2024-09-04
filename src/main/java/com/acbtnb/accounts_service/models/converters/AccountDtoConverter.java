@@ -13,10 +13,10 @@ public class AccountDtoConverter {
     }
 
     public AccountDTO branchToAccountDTO(Account account) {
-        return (AccountDTO)this.modelMapper.map(account, AccountDTO.class);
+        return (AccountDTO)modelMapper.map(account, AccountDTO.class);
     }
 
     public Account accountDTOToAccount(AccountDTO accountDTO) {
-        return (Account)this.modelMapper.map(accountDTO, Account.class);
+        return modelMapper.map(accountDTO, Account.class);
     }
 }
