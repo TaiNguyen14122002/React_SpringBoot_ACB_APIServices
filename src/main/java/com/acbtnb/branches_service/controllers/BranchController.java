@@ -41,7 +41,7 @@ public class BranchController implements IBranchesController {
     }
 
     @Override
-    @DeleteMapping("/delete-branch")
+    @PatchMapping("/delete-branch")
     public ResponseObject deleteBranch(@RequestParam("id") Integer id) {
         return iBranchService.deleteBranch(id);
     }
