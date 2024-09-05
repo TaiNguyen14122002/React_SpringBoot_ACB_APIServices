@@ -8,12 +8,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 
 @Service
 public class JwtProvider {
+//    public static final String  SECRET_KEY_STRING = "QWERTYUIOPASDFGHJKLZXCVBNM";
+//
+//    private static final SecretKey SECRET_KEY = new SecretKeySpec(
+//            SECRET_KEY_STRING.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+
 
     private static final SecretKey KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+
 
     public static String generateToken(Authentication auth) {
         return Jwts.builder()

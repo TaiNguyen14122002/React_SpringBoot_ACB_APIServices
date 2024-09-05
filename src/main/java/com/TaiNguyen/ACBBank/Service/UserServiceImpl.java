@@ -6,10 +6,13 @@ import com.TaiNguyen.ACBBank.Repository.UserStaffRepository;
 import com.TaiNguyen.ACBBank.utill.EmailUtil;
 import com.TaiNguyen.ACBBank.utill.OtpService;
 import com.TaiNguyen.ACBBank.utill.PasswordUtil;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.Set;
 
 @Service
@@ -76,6 +79,13 @@ public class UserServiceImpl implements UserService{
         userStaffRepository.save(user);
         return true;
     }
+
+
+
+//    public boolean isValidEmail(String email) {
+//        EmailValidator validator = EmailValidator.getInstance();
+//        return validator.isValid(email);
+//    }
 
 //    @Override
 //    public void addEmployee(User_Staff_ACBBank newEmployee, String token) throws Exception {

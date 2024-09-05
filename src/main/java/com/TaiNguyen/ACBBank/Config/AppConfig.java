@@ -26,6 +26,10 @@ public class AppConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/auth/signup").hasRole("ADMIN") // Chỉ cho phép ADMIN truy cập các endpoint /admin/**
+                        .requestMatchers("/auth/update-role/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/view-admin/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/view-viewers/**").hasRole("ADMIN")
+                        .requestMatchers("/auth/create-multiple-users").hasRole("ADMIN")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Cho phép truy cập Swagger UI và API docs
                         .anyRequest().authenticated()
                 )
@@ -38,7 +42,7 @@ public class AppConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        config.setAllowedOrigins(Arrays.asList("http://192.168.1.7:9000"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
