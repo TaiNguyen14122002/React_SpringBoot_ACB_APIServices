@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class BulkAccountDTO {
-    private List<AccountDTO> accounts;
+public class BulkAccountTypeDTO {
+    private List<AccountTypeDTO> accountTypes;
 }

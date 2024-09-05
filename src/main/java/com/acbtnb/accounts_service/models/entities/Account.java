@@ -1,10 +1,10 @@
 package com.acbtnb.accounts_service.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,22 +16,21 @@ import java.time.LocalDateTime;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @NonNull
+    @Column(length = 10)
+    private String id;
 
-    private String account_number;
-
-//    @NonNull
-    private Integer customer_id;
-
-//    @NonNull
+    @NonNull
     private Integer branch_id;
 
-//    @NonNull
+    @NonNull
+    private Integer customer_id;
+
+
+    @NonNull
     private String status;
 
-
-//    @NonNull
+    @NonNull
     @Column(name = "created_at")
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private LocalDateTime created_at = LocalDateTime.now();
@@ -41,8 +40,6 @@ public class Account {
     private LocalDateTime deleted_at;
 
     @ManyToOne
-    @JoinColumn(name = "account_type_id")
-    @JsonIgnore
+    @JoinColumn(name = "account_type_id", nullable = false)
     private AccountType account_type;
 }
-

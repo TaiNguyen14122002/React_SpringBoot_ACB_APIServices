@@ -15,11 +15,10 @@ import java.util.Set;
 public class AccountType {
 
     @Id
-//    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @NonNull
+    @NonNull
     @Column(length = 10)
     private String name;
 
